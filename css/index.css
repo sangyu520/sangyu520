@@ -10887,12 +10887,6 @@ h1.page-title + .tag-cloud-list {
   -ms-transition: 0.6s;
   transition: 0.6s;
   overflow: hidden;
-  -webkit-animation: header 5s linear forwards;
-  -moz-animation: header 5s linear forwards;
-  -o-animation: header 5s linear forwards;
-  -ms-animation: header 5s linear forwards;
-  animation: header 5s linear forwards;
-  animation-timeline: view();
   background-color: transparent;
 }
 #page-header.post-bg #nav {
@@ -14336,6 +14330,13 @@ blockquote {
   -o-transform: translateY(0px);
   -ms-transform: translateY(0px);
   transform: translateY(0px);
+}
+#post .post-copyright__author_box .post-copyright__author_img:hover img.post-copyright__author_img_front {
+  -webkit-transform: translateY(3px);
+  -moz-transform: translateY(3px);
+  -o-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  transform: translateY(3px);
 }
 #post .post-copyright__author_box .post-copyright__author_img img.post-copyright__author_img_front {
   z-index: 20;
