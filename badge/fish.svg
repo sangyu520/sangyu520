@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="20" role="img" aria-label="桑榆 - 课堂状态">
+  <title>桑榆 - 状态切换中</title>
+  <defs>
+    <linearGradient id="leftGrad" x2="0" y2="100%">
+      <stop offset="0" stop-color="#fbc2eb"/>
+      <stop offset="1" stop-color="#a6c1ee"/>
+    </linearGradient>
+    <linearGradient id="rightGrad" x2="0" y2="100%">
+      <stop offset="0" stop-color="#fcd5ce"/>
+      <stop offset="1" stop-color="#fae1dd"/>
+    </linearGradient>
+    <style>
+      .wiggle {
+        animation: wiggle 1.5s infinite ease-in-out;
+        transform-origin: center;
+      }
+      @keyframes wiggle {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(3deg); }
+        75% { transform: rotate(-3deg); }
+      }
+    </style>
+  </defs>
+  <g>
+    <rect x="0" y="0" width="60" height="20" fill="url(#leftGrad)" rx="3"/>
+    <rect x="60" y="0" width="120" height="20" fill="url(#rightGrad)" rx="3"/>
+  </g>
+
+  <!-- 表情区域：晃动 -->
+  <text x="12" y="15" class="wiggle" font-size="14" font-family="Segoe UI Emoji, sans-serif">≧◡≦</text>
+
+  <!-- 名字 -->
+  <text x="30" y="14" fill="#fff" font-family="Comic Sans MS, sans-serif" font-size="11" font-weight="bold">桑榆</text>
+
+  <!-- 状态栏：动态切换文字 -->
+  <text x="100" y="14" fill="#333" font-family="Comic Sans MS, sans-serif" font-size="11">
+    <tspan>
+      认真听课
+      <animate attributeName="display" values="inline;none;none" dur="6s" repeatCount="indefinite" begin="0s"/>
+    </tspan>
+    <tspan>
+      偷摸鱼
+      <animate attributeName="display" values="none;inline;none" dur="6s" repeatCount="indefinite" begin="5s"/>
+    </tspan>
+    <tspan>
+      被老师盯住了！
+      <animate attributeName="display" values="none;none;inline" dur="6s" repeatCount="indefinite" begin="6s"/>
+    </tspan>
+  </text>
+</svg>
