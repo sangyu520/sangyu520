@@ -11,6 +11,7 @@ $.ajax({
       ipLocation = res;
   }
 })
+
 function getDistance(e1, n1, e2, n2) {
   const R = 6371
   const { sin, cos, asin, PI, hypot } = Math
@@ -28,11 +29,11 @@ function getDistance(e1, n1, e2, n2) {
 }
 
 function showWelcome() {
-
   let dist = getDistance(110.326842, 20.056716, ipLocation.result.location.lng, ipLocation.result.location.lat); //这里记得换成自己的经纬度
   let pos = ipLocation.result.ad_info.nation;
   let ip;
   let posdesc;
+
   //根据国家、省份、城市信息自定义欢迎语
   switch (ipLocation.result.ad_info.nation) {
       case "日本":
@@ -151,7 +152,7 @@ function showWelcome() {
                   }
                   break;
               case "湖南省":
-                  posdesc = "74751，长沙斯塔克";
+                  posdesc = "74751,长沙斯塔克";
                   break;
               case "广东省":
                   switch (ipLocation.result.ad_info.city) {
@@ -179,7 +180,7 @@ function showWelcome() {
                   posdesc = "康康川妹子";
                   break;
               case "贵州省":
-                  posdesc = "茅台，学生，再塞200";
+                  posdesc = "茅台,学生,再塞200";
                   break;
               case "云南省":
                   posdesc = "玉龙飞舞云缠绕，万仞冰川直耸天";
@@ -221,24 +222,28 @@ function showWelcome() {
           break;
   }
 
+  // 添加动态的“我也想去[城市名]逛逛”
+  posdesc += ` 我也想去${pos}逛逛，可惜没时间 🧳`;
+
   //根据本地时间切换欢迎语
   let timeChange;
   let date = new Date();
   if (date.getHours() >= 5 && date.getHours() < 11) timeChange = "<span>🌤️ 早上好，一日之计在于晨</span>";
   else if (date.getHours() >= 11 && date.getHours() < 13) timeChange = "<span>☀️ 中午好，记得午休喔~</span>";
   else if (date.getHours() >= 13 && date.getHours() < 17) timeChange = "<span>🕞 下午好，饮茶先啦！</span>";
-  else if (date.getHours() >= 17 && date.getHours() < 19) timeChange = "<span>🚶‍♂️ 即将下班，记得按时吃饭~</span>";
+  else if (date.getHours() >= 17 && date.getHours() < 19) timeChange = "<span>🚶‍♂️ 即将放学，记得按时吃饭~</span>";
   else if (date.getHours() >= 19 && date.getHours() < 24) timeChange = "<span>🌙 晚上好，夜生活嗨起来！</span>";
   else timeChange = "夜深了，早点休息，少熬夜";
 
-// 新增ipv6显示为指定内容
+  // 新增ipv6显示为指定内容
   if (ip.includes(":")) {
       ip = "<br>好复杂，咱看不懂~(ipv6)";
   }
+
   try {
       //自定义文本和需要放的位置
       document.getElementById("welcome-info").innerHTML =
-          `欢迎来自 <b><span style="color: var(--kouseki-ip-color);font-size: var(--kouseki-gl-size)">${pos}</span></b> 的小友💖<br>${posdesc}🍂<br>当前位置距博主约 <b><span style="color: var(--kouseki-ip-color)">${dist}</span></b> 公里！<br>您的IP地址为：<b><span>${ip}</span></b><br>${timeChange} <br>`;
+          `欢迎来自 <b><span style="color: var(--kouseki-ip-color);font-size: var(--kouseki-gl-size)">${pos}</span></b> 的小友💖<br>${posdesc}🍂<br>当前位置距博主约 <b><span style="color: var(--kouseki-ip-color)">${dist}</span></b> 公里！<br>您的IP地址为:<b><span>${ip}</span></b><br>${timeChange} <br>`;
   } catch (err) {
        console.log("Pjax无法获取元素")
   }
