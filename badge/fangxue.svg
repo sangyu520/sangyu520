@@ -1,32 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="108" height="20" role="img" aria-label="桑榆-放学啦">
-  <title>桑榆-放学啦</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="30" role="img">
+  <title>今天又是躺平的一天！</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d0d1a"/>
+      <stop offset="100%" stop-color="#1a1a33"/>
+    </linearGradient>
+  </defs>
   <style>
-    a:hover #llink { fill: url(#b); stroke: #ccc }
-    a:hover #rlink { fill: #4183c4 }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    @keyframes star-flicker {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.2; }
+    }
+    @keyframes scroll-text {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .star {
+      animation: star-flicker 2s infinite;
+    }
+    .emoji {
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+    .text:hover {
+      fill: #4183c4;
+      cursor: pointer;
+    }
+    .scrolling-text {
+      font-size: 8px;
+      fill: #ccc;
+      animation: scroll-text 12s linear infinite;
+    }
   </style>
-  <linearGradient id="a" x2="0" y2="100%">
-    <stop offset="0" stop-color="#fcfcfc" stop-opacity="0"/>
-    <stop offset="1" stop-opacity=".1"/>
-  </linearGradient>
-  <linearGradient id="b" x2="0" y2="100%">
-    <stop offset="0" stop-color="#ccc" stop-opacity=".1"/>
-    <stop offset="1" stop-opacity=".1"/>
-  </linearGradient>
-  <g stroke="#d5d5d5">
-    <rect stroke="none" fill="#fcfcfc" x="0.5" y="0.5" width="60" height="19" rx="2"/>
-    <rect x="66.5" y="0.5" width="41" height="19" rx="2" fill="#fafafa"/>
-    <rect x="66" y="7.5" width="0.5" height="5" stroke="#fafafa"/>
-    <path d="M66.5 6.5 l-3 3v1 l3 3" stroke="d5d5d5" fill="#fafafa"/>
-  </g>
 
-  <!-- 替换图标为动漫风猫咪头像 -->
-  <image x="5" y="3" width="14" height="14" xlink:href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRjI4RjZGIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZD0iTTExLDEgQzYuNSA1LjUgMyAxMCAzIDE0IEMzIDE3LjUgNi41IDIxIDExIDIxIEMxNS41IDIxIDE5IDE3LjUgMTkgMTQgQzE5IDEwIDE1LjUgNS41IDExIDEgeiBNMTAsMTggQzkuNSAxOCA5IDE3LjUgOSAxNyBDOSAxNi41IDkuNSAxNiAxMCAxNiBDMTAuNSAxNiAxMSAxNi41IDExIDE3IEMxMSAxNy41IDEwLjUgMTggMTAsMTggeiBNMTQsMTggQzEzLjUgMTggMTMgMTcuNSAxMyAxNyBDMTMgMTYuNSAxMy41IDE2IDE0IDE2IEMxNC41IDE2IDE1IDE2LjUgMTUgMTcgQzE1IDE3LjUgMTQuNSAxOCAxNCwxOCB6Ii8+PC9zdmc+" />
+  <!-- 背景 -->
+  <rect x="0" y="0" width="240" height="30" fill="url(#bg)" />
 
-  <g aria-hidden="true" fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px">
-    <rect id="llink" stroke="#d5d5d5" fill="url(#a)" x=".5" y=".5" width="60" height="19" rx="2"/>
-    <text aria-hidden="true" x="385" y="150" fill="#fff" transform="scale(.1)" textLength="330">桑榆</text>
-    <text x="385" y="140" transform="scale(.1)" textLength="330">桑榆</text>
-    <text aria-hidden="true" x="865" y="150" fill="#fff" transform="scale(.1)" textLength="330">放学啦</text>
-    <text id="rlink" x="865" y="140" transform="scale(.1)" textLength="330">放学啦</text>
-  </g>
+  <!-- 星星 -->
+  <circle class="star" cx="10" cy="5" r="1" fill="#fff" />
+  <circle class="star" cx="50" cy="10" r="1.2" fill="#fff" />
+  <circle class="star" cx="120" cy="4" r="1.4" fill="#fff" />
+  <circle class="star" cx="180" cy="8" r="1" fill="#fff" />
+  <circle class="star" cx="220" cy="6" r="1.1" fill="#fff" />
+
+  <!-- 可爱表情 -->
+  <text class="emoji" id="emoji" x="20" y="20" font-size="12" font-family="monospace" fill="#fff">(๑≧◡≦)๑</text>
+
+  <!-- 主文字 -->
+  <text class="text" x="100" y="20" font-size="12" font-family="Helvetica, sans-serif" font-weight="bold" fill="#fff">放学啦</text>
+
+  <!-- 滚动字幕 -->
+  <text class="scrolling-text" x="0" y="29">💤 躺平进行中 · 躺平进行中 · 躺平进行中 ·</text>
 </svg>
