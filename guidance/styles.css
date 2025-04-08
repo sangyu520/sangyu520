@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(https://i.postimg.cc/Zq6c86pY/background1.png);
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.container {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.content h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.content p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.buttons .btn {
+  display: inline-block;
+  background-color: transparent;
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  text-decoration: none;
+  margin: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.buttons .btn:hover {
+  background-color: #f53d3d;
+}
+.snowflakes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: calc(1.5em + 1vw); /* 会根据屏幕宽度动态放大 */
+  animation: fall linear infinite;
+}
+
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 为每个雪花添加不同的动画延迟和位置 */
+.snowflake {
+  left: calc(100% * var(--x));
+  animation-duration: calc(5s + 5s * var(--speed));
+}
+
+.snowflake:nth-child(n) {
+  --x: 0.1;
+  --speed: 0.2;
+}
+.snowflake:nth-child(2n) {
+  --x: 0.3;
+  --speed: 0.6;
+}
+.snowflake:nth-child(3n) {
+  --x: 0.5;
+  --speed: 0.8;
+}
+.snowflake:nth-child(4n) {
+  --x: 0.7;
+  --speed: 0.4;
+}
+.snowflake:nth-child(5n) {
+  --x: 0.9;
+  --speed: 0.9;
+}
