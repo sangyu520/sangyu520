@@ -1,0 +1,4 @@
+<!-- 页面初始加载 -->
+<world-map data-dots="..." style="display: block; width: 100%;">
+  <img src="/images/map.svg" alt="静态世界地图" loading="lazy" />
+</world-map>
