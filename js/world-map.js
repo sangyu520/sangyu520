@@ -1,57 +1,116 @@
 class WorldMap extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' }); // 创建 Shadow DOM
+    this.attachShadow({ mode: 'open' });
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .map-container {
+        width: 100%;
+        height: 100%;
+        min-height: 400px;
+      }
+    `;
+
+    const container = document.createElement('div');
+    container.classList.add('map-container');
+
+    this.shadowRoot.append(style, container);
+    this._container = container;
+    this._chart = null;
+  }
+
+  static get observedAttributes() {
+    return ['width', 'height', 'data'];
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (name === 'width') {
+      this.style.width = newVal;
+    } else if (name === 'height') {
+      this.style.height = newVal;
+    } else if (name === 'data' && this._chart) {
+      try {
+        const data = JSON.parse(newVal);
+        this._updateData(data);
+      } catch (e) {
+        console.error('Invalid JSON in data attribute');
+      }
+    }
   }
 
   connectedCallback() {
-    const dots = JSON.parse(this.getAttribute('data-dots')) || [];
-    this.render(dots);
-  }
+    this.style.display = 'block';
+    this.style.width = this.getAttribute('width') || '100%';
+    this.style.height = this.getAttribute('height') || '500px';
 
-  render(dots) {
-    const mapContainer = document.createElement('div');
-    mapContainer.style.position = 'relative';
-    mapContainer.style.width = '100%';
-    mapContainer.style.height = '0';
-    mapContainer.style.paddingBottom = '50%'; // 保持 2:1 的宽高比
+    if (typeof echarts === 'undefined') {
+      this._container.textContent = 'ECharts not loaded.';
+      return;
+    }
 
-    const svgContainer = document.createElement('svg');
-    svgContainer.setAttribute('viewBox', '0 0 800 400');
-    svgContainer.style.position = 'absolute';
-    svgContainer.style.top = '0';
-    svgContainer.style.left = '0';
-    svgContainer.style.width = '100%';
-    svgContainer.style.height = '100%';
+    this._chart = echarts.init(this._container);
 
-    // 绘制路径和点
-    dots.forEach((dot) => {
-      const startPoint = this.projectPoint(dot.start.lat, dot.start.lng);
-      const endPoint = this.projectPoint(dot.end.lat, dot.end.lng);
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', this.createCurvedPath(startPoint, endPoint));
-      path.setAttribute('fill', 'none');
-      path.setAttribute('stroke', '#0ea5e9');
-      path.setAttribute('stroke-width', '1');
-      svgContainer.appendChild(path);
+    this._chart.setOption({
+      title: {
+        text: 'World Map',
+        left: 'center',
+        textStyle: { fontSize: 20 }
+      },
+      tooltip: { trigger: 'item' },
+      visualMap: {
+        min: 0,
+        max: 100,
+        text: ['High', 'Low'],
+        realtime: false,
+        calculable: true,
+        inRange: {
+          color: ['#e0ffff', '#006edd']
+        }
+      },
+      series: [{
+        name: 'World',
+        type: 'map',
+        map: 'world',
+        roam: true,
+        emphasis: {
+          label: { show: true }
+        },
+        data: []
+      }]
     });
 
-    mapContainer.appendChild(svgContainer);
-    this.shadowRoot.appendChild(mapContainer);
+    // 如果 data 属性已经存在，尝试载入数据
+    const dataAttr = this.getAttribute('data');
+    if (dataAttr) {
+      try {
+        const data = JSON.parse(dataAttr);
+        this._updateData(data);
+      } catch (e) {
+        console.warn('Invalid data attribute');
+      }
+    }
+
+    // Resize support
+    window.addEventListener('resize', this._resizeHandler = () => {
+      if (this._chart) this._chart.resize();
+    });
   }
 
-  projectPoint(lat, lng) {
-    const x = (lng + 180) * (800 / 360);
-    const y = (90 - lat) * (400 / 180);
-    return { x, y };
+  disconnectedCallback() {
+    if (this._chart) {
+      this._chart.dispose();
+    }
+    window.removeEventListener('resize', this._resizeHandler);
   }
 
-  createCurvedPath(start, end) {
-    const midX = (start.x + end.x) / 2;
-    const midY = Math.min(start.y, end.y) - 50;
-    return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
+  _updateData(data) {
+    this._chart.setOption({
+      series: [{
+        data
+      }]
+    });
   }
 }
 
-// 注册 custom element
 customElements.define('world-map', WorldMap);
